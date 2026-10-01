@@ -91,6 +91,7 @@ internal static class Setup
                 {
                     string target = Path.GetFullPath(Path.Combine(stage, entry.FullName));
                     if (!target.StartsWith(stage + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)) throw new IOException("Invalid installer package path.");
+                    if (entry.Name.Length == 0) { Directory.CreateDirectory(target); continue; }
                     Directory.CreateDirectory(Path.GetDirectoryName(target));
                     using (var input = entry.Open())
                     using (var output = File.Create(target)) input.CopyTo(output);
