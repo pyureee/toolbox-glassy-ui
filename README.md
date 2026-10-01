@@ -4,38 +4,30 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 ![Toolbox glass interface](docs/images/main.png)
 
-The theme includes a 172 px sidebar, an 80 px animated sidebar logo, and a Log button aligned with the main log panel. Native Start/Stop controls, logs, mods, settings, and update messages keep their existing handlers.
-
-Version 1.0.1 fixes the outer window corners: the translucent surface and title bar now follow the same 14 px curve as the border. To update an existing installation, close Toolbox and run the installer again; it backs up the changed files.
+Version 1.1.0 includes an EXE installer with a folder picker and an optional **Auto-Update Custom UI** checkbox in Toolbox Settings. The outer window, translucent surface, and title bar share rounded corners.
 
 ![Glass startup splash](docs/images/splash.png)
 
 ## Install into your Toolbox
 
 1. **Close TERA Toolbox completely**, including its tray instance.
-2. [Download this repository as a ZIP](https://github.com/pyureee/toolbox-custom-ui/archive/refs/heads/main.zip), then extract it somewhere outside your Toolbox folder.
-3. Open **Windows PowerShell as administrator** if Toolbox is installed under `Program Files`.
-4. In PowerShell, go to the extracted `toolbox-custom-ui-main` folder. Replace the example folder below with the location where you extracted it:
+2. [Download ToolboxCustomUI-Setup.exe](https://github.com/pyureee/toolbox-custom-ui/raw/refs/heads/main/downloads/ToolboxCustomUI-Setup.exe).
+3. Run the EXE. Click **Browse** or paste the path to your Toolbox **main folder**. For example: `C:\Program Files (x86)\TeraToolbox Private`. Select the folder containing `bin`, `mods`, and `node_modules`.
+4. Choose **Install / update custom UI**, then click **Continue**. Windows asks for administrator access only if that folder needs it.
+5. Wait for the success message, then launch Toolbox normally.
+
+![Installer folder selection](docs/images/installer.png)
+
+The EXE contains the installation package. It does not need an internet connection to install, a separate Node.js installation, or a Python/npm download. It uses Windows .NET Framework and Toolbox's bundled Electron/Node runtime.
+
+You can also install from the [source ZIP](https://github.com/pyureee/toolbox-custom-ui/archive/refs/heads/main.zip). Extract it outside Toolbox, open PowerShell in that folder (as administrator if required), and run:
 
    ```powershell
    Set-Location "C:\Downloads\toolbox-custom-ui-main"
-   ```
-
-5. Run the installer with your Toolbox installation path:
-
-   ```powershell
    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install.ps1 -ToolboxPath "C:\Program Files (x86)\TeraToolbox Private"
    ```
 
-   For a different location, replace that path, for example:
-
-   ```powershell
-   powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install.ps1 -ToolboxPath "C:\Games\TeraToolbox"
-   ```
-
-6. Wait for **“Glass UI installed”**, then launch Toolbox normally.
-
-The installer uses Toolbox's bundled Electron/Node runtime. You do **not** need a separate Node.js, Python, npm install, or package download. The execution-policy override applies only to that PowerShell invocation.
+The execution-policy override applies only to that PowerShell invocation.
 
 Before writing anything, the installer validates the existing UI entry points and builds all patches. It then creates a verified backup of affected files in:
 
@@ -47,7 +39,9 @@ Keep the backup ID printed by the installer. Your mods, game files, and `config.
 
 ## Restore the previous UI
 
-Close Toolbox, open PowerShell in this project's folder, and run:
+Close Toolbox and run the EXE again. Select the same main folder, choose **Restore previous UI**, and click **Continue**.
+
+From the source ZIP, you can also open PowerShell in this project's folder and run:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Restore.ps1 -ToolboxPath "C:\Program Files (x86)\TeraToolbox Private"
@@ -59,7 +53,7 @@ This restores the most recent installed UI backup. To select an earlier backup, 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Restore.ps1 -ToolboxPath "C:\Program Files (x86)\TeraToolbox Private" -BackupId "YOUR-BACKUP-ID"
 ```
 
-Choose the first installation's backup to return to the UI you had before this theme. Restore verifies original backup hashes and stops if a themed file was edited after installation. Newly created theme files are removed; pre-existing files are restored. Reopen Toolbox afterward.
+Each restore undoes one installation or automatic UI update. After several updates, repeat **Restore previous UI** to work back to the original appearance. An older backup can only restore files that still match its installed snapshot, so undo newer updates first. Restore verifies original backup hashes and stops if a themed file was edited after installation. The checkbox preference is treated as a mutable setting. Newly created theme files are removed; pre-existing files are restored. Reopen Toolbox afterward.
 
 ## Toolbox auto-update protection
 
@@ -74,7 +68,17 @@ Protected files include:
 
 Other Toolbox files continue updating, and the separate mod updater keeps its normal behavior. These protected launch/update files also skip upstream changes. To refresh them, restore the original UI, run Toolbox's update, close Toolbox, and install the theme again.
 
-The theme does not download its own updates automatically. Download a newer project ZIP and run its installer when you want a theme update.
+## Auto-Update Custom UI
+
+Open **Settings** in Toolbox and check **Auto-Update Custom UI** to enable updates from this GitHub repository. It is **off by default** and independent of Toolbox's own self-update and mod-update options.
+
+![Auto-Update Custom UI in Settings](docs/images/settings.png)
+
+When enabled, the custom updater checks at startup, immediately after enabling the checkbox, and every six hours while Toolbox is running. It reads [`updates/latest.json`](updates/latest.json), downloads the newer version from the exact Git commit recorded there, verifies each file's size and SHA-256, and backs up changed files before installing. A failed download keeps the installed UI. It does not restart Toolbox or interrupt the game proxy; reopen Toolbox to load a successfully installed update.
+
+The choice is saved in `custom-ui-settings.json` in your Toolbox main folder and survives reinstalling the theme. Unchecking it stops future checks and cancels an in-progress download. Core Toolbox updates still skip custom UI files; this separate updater is responsible for theme updates.
+
+The status below the checkbox shows the installed version and update result. You can always update manually by running a newer EXE.
 
 ## Compatibility and appearance
 
@@ -97,8 +101,16 @@ src/gui/css/              Main glass theme, layout foundation, startup splash
 src/gui/js/               Layout helper and native theme synchronization
 src/gui/fonts/            Monaspace Neon and its font license
 src/theme.json            Theme version and updater preservation paths
+src/runtime/              Separate GitHub updater and settings IPC
+installer/                C# Windows installer source and application manifest
+scripts/Build-Installer.ps1  Build the EXE with the Windows C# compiler
+scripts/Publish-Update.ps1   Generate the pinned GitHub manifest and EXE
+updates/latest.json       Custom UI update channel
+downloads/                Ready-to-run EXE and its SHA-256
 ```
 
 Run `npm test` or `node tests/installer.cjs` if you have Node.js available for development. Installation itself uses the runtime already bundled with Toolbox.
+
+To publish a new UI update: bump `package.json` and `src/theme.json`, test and commit the source, run `scripts/Publish-Update.ps1`, then commit its generated `updates/latest.json` and `downloads/` files and push both commits to `main`. The manifest points to the source commit, so published file hashes do not change when the download artifacts are committed afterward. Use a newer version number for each published update.
 
 See [NOTICE.md](NOTICE.md) for font and asset attribution. Theme source is licensed under MIT.

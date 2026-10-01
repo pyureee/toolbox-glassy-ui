@@ -39,6 +39,9 @@ function planInstall(toolboxRoot, staticLogo, sourceRoot=__dirname) {
     changes.set('bin/index-gui.js',Buffer.from(patches.patchSplashWindow(read('bin/index-gui.js'))));
     changes.set('bin/update-self.js',Buffer.from(patches.patchUpdater(read('bin/update-self.js'))));
     changes.set('bin/gui/main.html',Buffer.from(patches.patchMainHtml(read('bin/gui/main.html'))));
+    for(const name of ['installer.cjs','patches.cjs','theme.json']) changes.set('bin/custom-ui-installer/'+name,fs.readFileSync(path.join(sourceRoot,name)));
+    changes.set('bin/custom-ui-updater.js',fs.readFileSync(path.join(sourceRoot,'runtime','custom-ui-updater.js')));
+    if(!fs.existsSync(safePath(root,'custom-ui-settings.json'))) changes.set('custom-ui-settings.json',Buffer.from('{"autoUpdate":false}\n'));
     const assets=path.join(sourceRoot,'gui');
     for(const file of walk(assets)) changes.set('bin/gui/'+path.relative(assets,file).split(path.sep).join('/'),fs.readFileSync(file));
     const logo=fs.readFileSync(staticLogo);
@@ -53,7 +56,7 @@ function planInstall(toolboxRoot, staticLogo, sourceRoot=__dirname) {
     changes.set(manifestPath,Buffer.from(JSON.stringify({...existing,version:1,description:'Toolbox Custom UI: smoked-glass appearance protected from self-update.',themeVersion:theme.version,preserve},null,2)+'\n'));
     for(const [relative,data] of changes) {
         safePath(root,relative);
-        if(relative.endsWith('.js')) new vm.Script(Module.wrap(data.toString('utf8')),{filename:relative});
+        if(/\.(?:js|cjs)$/.test(relative)) new vm.Script(Module.wrap(data.toString('utf8')),{filename:relative});
     }
     const ordered=Array.from(changes).sort(([a],[b])=>{
         const priority=r=>r===manifestPath?0:r==='bin/update-self.js'?1:2;
@@ -136,7 +139,7 @@ function restore(toolboxRoot, backupId) {
         if(!permitted.has(record.path)||seen.has(record.path)||typeof record.existed!=='boolean'||!/^[a-f0-9]{64}$/.test(record.installedSha256)) throw new Error('Invalid UI backup file record.');
         seen.add(record.path);
         const target=safePath(root,record.path);
-        if(!fs.existsSync(target)||hash(fs.readFileSync(target))!==record.installedSha256) throw new Error('File was edited after installation; restore stopped: '+record.path);
+        if(!fs.existsSync(target)||(record.path!=='custom-ui-settings.json'&&hash(fs.readFileSync(target))!==record.installedSha256)) throw new Error('File was edited after installation; restore stopped: '+record.path);
         const current=fs.readFileSync(target);
         let original=null;
         if(record.existed) {

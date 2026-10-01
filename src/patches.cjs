@@ -79,12 +79,28 @@ function patchWindow(source, receiver, values, captionHook) {
 }
 
 function patchMainWindow(source) {
-    return patchWindow(source, 'this.window', {
+    let result = patchWindow(source, 'this.window', {
         width: 'Math.max(config?.gui?.width || 1300, 1300)',
         height: 'Math.max(config?.gui?.height || 710, 710)',
         minWidth: '1300', minHeight: '710', frame: 'false', resizable: 'true',
         transparent: 'true', backgroundColor: "'#00000000'"
     }, true);
+    if (!result.includes('// toolbox-custom-ui: independent theme updates.')) {
+        const match = result.match(/this\.window\s*=\s*new BrowserWindow\(\s*\{/);
+        const opening = match.index + match[0].lastIndexOf('{');
+        const closing = closingBrace(result, opening);
+        const tail = result.slice(closing + 1).match(/^[ \t\r\n]*\)[ \t]*;?/);
+        if (!tail) throw new Error('Unsupported Toolbox source: updater attachment.');
+        const at = closing + 1 + tail[0].length;
+        const newline = result.includes('\r\n') ? '\r\n' : '\n';
+        const hook = [
+            '', '        // toolbox-custom-ui: independent theme updates.',
+            '        try { require("./custom-ui-updater").attach(this.window, ipcMain); }',
+            '        catch (error) { console.error("Custom UI updater: " + error.message); }', ''
+        ].join(newline);
+        result = result.slice(0, at) + hook + result.slice(at);
+    }
+    return result;
 }
 
 function patchSplashWindow(source) {
@@ -107,7 +123,7 @@ function patchMainHtml(source) {
     const newline = result.includes('\r\n') ? '\r\n' : '\n';
     const styles = ['comfort.css', 'glass.css'].filter(name => !new RegExp(`href=["'][^"']*css/${name.replace('.', '\\.')}`).test(result));
     if (styles.length) result = replaceOnce(result, /<\/head>/i, styles.map(name => `\t<link rel="stylesheet" href="./css/${name}">`).join(newline) + newline + '</head>', 'HTML head');
-    const scripts = ['comfort-layout.js', 'glass-theme.js'].filter(name => !new RegExp(`src=["'][^"']*js/${name.replace('.', '\\.')}`).test(result));
+    const scripts = ['comfort-layout.js', 'glass-theme.js', 'custom-ui-settings.js'].filter(name => !new RegExp(`src=["'][^"']*js/${name.replace('.', '\\.')}`).test(result));
     if (scripts.length) result = replaceOnce(result, /<\/body>/i, scripts.map(name => `\t<script src="./js/${name}"></script>`).join(newline) + newline + '</body>', 'HTML body end');
     return result;
 }

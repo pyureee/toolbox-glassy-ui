@@ -267,6 +267,12 @@ body.toolbox-modern .v-input--is-focused .v-icon,
 body.toolbox-modern .v-input--is-label-active .v-input--selection-controls__input .v-icon { color: var(--tb-accent) !important; }
 
 /* Popup menus and dialogs use solid glass-tinted surfaces for reliable readability. */
+.tb-custom-ui-settings { margin: 20px 2px 8px; padding-top: 18px; border-top: 1px solid var(--tb-border-soft); }
+.tb-custom-ui-settings label { display: inline-flex; align-items: center; gap: 10px; color: var(--tb-text-muted); font-size: 14px; cursor: pointer; }
+.tb-custom-ui-settings input { width: 18px; height: 18px; margin: 0; accent-color: var(--tb-accent); cursor: pointer; }
+.tb-custom-ui-settings input:focus-visible { outline: 2px solid var(--tb-accent); outline-offset: 3px; }
+.tb-custom-ui-status { margin: 8px 0 0 28px; color: var(--tb-text-muted); font-size: 12px; line-height: 1.5; }
+
 body.toolbox-modern .v-menu__content, body.toolbox-modern .v-list,
 body.toolbox-modern .v-card { background: var(--tb-surface-raised) !important; color: var(--tb-text) !important; border-color: var(--tb-border); }
 body.toolbox-modern .v-dialog { border-color: var(--tb-border); border-radius: 18px !important; }
