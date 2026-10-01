@@ -4,7 +4,7 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 ![Toolbox glass interface](docs/images/main.png)
 
-Version 1.1.0 includes an EXE installer with a folder picker and an optional **Auto-Update Custom UI** checkbox in Toolbox Settings. The outer window, translucent surface, and title bar share rounded corners.
+Version 1.1.1 includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox in Toolbox Settings. The outer window, translucent surface, and title bar share rounded corners.
 
 ![Glass startup splash](docs/images/splash.png)
 
@@ -74,11 +74,11 @@ Open **Settings** in Toolbox and check **Auto-Update Custom UI** to enable updat
 
 ![Auto-Update Custom UI in Settings](docs/images/settings.png)
 
-When enabled, the custom updater checks at startup, immediately after enabling the checkbox, and every six hours while Toolbox is running. It reads [`updates/latest.json`](updates/latest.json), downloads the newer version from the exact Git commit recorded there, verifies each file's size and SHA-256, and backs up changed files before installing. A failed download keeps the installed UI. It does not restart Toolbox or interrupt the game proxy; reopen Toolbox to load a successfully installed update.
+When enabled, the custom updater checks once when Toolbox starts. Enabling the checkbox takes effect on the next launch; there are no timed background checks. It reads [`updates/latest.json`](updates/latest.json), downloads the newer version from the exact Git commit recorded there, verifies each file's size and SHA-256, and backs up changed files before installing. A failed download keeps the installed UI. It does not restart Toolbox or interrupt the game proxy; reopen Toolbox to load a successfully installed update.
 
 The choice is saved in `custom-ui-settings.json` in your Toolbox main folder and survives reinstalling the theme. Unchecking it stops future checks and cancels an in-progress download. Core Toolbox updates still skip custom UI files; this separate updater is responsible for theme updates.
 
-The status below the checkbox shows the installed version and update result. You can always update manually by running a newer EXE.
+You can also update manually by running a newer EXE.
 
 ## Compatibility and appearance
 

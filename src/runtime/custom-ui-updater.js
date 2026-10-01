@@ -6,7 +6,6 @@ const https = require('https');
 const crypto = require('crypto');
 const REPOSITORY = 'pyureee/toolbox-custom-ui';
 const MANIFEST_URL = 'https://raw.githubusercontent.com/'+REPOSITORY+'/main/updates/latest.json';
-const INTERVAL = 6 * 60 * 60 * 1000;
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 
 function fetchBytes(url,{maxBytes=4*1024*1024,signal}={}) {
@@ -45,10 +44,10 @@ function validateManifest(manifest) {
     return manifest;
 }
 class CustomUIUpdater {
-    constructor(root,{fetch=fetchBytes,notify=()=>{},interval=INTERVAL,install}={}) {
-        this.root=fs.realpathSync(root);this.fetch=fetch;this.notify=notify;this.interval=interval;this.install=install;
-        this.settingsFile=path.join(this.root,'custom-ui-settings.json');this.timer=null;this.running=null;this.abort=null;this.disposed=false;
-        this.state={enabled:false,version:'1.1.0',message:'Automatic custom UI updates are off.'};
+    constructor(root,{fetch=fetchBytes,notify=()=>{},install}={}) {
+        this.root=fs.realpathSync(root);this.fetch=fetch;this.notify=notify;this.install=install;
+        this.settingsFile=path.join(this.root,'custom-ui-settings.json');this.started=false;this.running=null;this.abort=null;this.disposed=false;
+        this.state={enabled:false,version:'1.1.1',message:'Automatic custom UI updates are off.'};
         this.refresh();
     }
     readSettings() {return fs.existsSync(this.settingsFile)?JSON.parse(fs.readFileSync(this.settingsFile,'utf8')):{autoUpdate:false};}
@@ -59,9 +58,9 @@ class CustomUIUpdater {
     }
     emit(message) {if(message)this.state.message=message;if(!this.disposed)this.notify({...this.state});}
     start() {
-        if(this.disposed||!this.state.enabled||this.timer)return;
-        this.timer=setInterval(()=>this.check(),this.interval);if(this.timer.unref)this.timer.unref();
-        this.check();
+        if(this.disposed||this.started)return;
+        this.started=true;
+        if(this.state.enabled)return this.check();
     }
     setEnabled(enabled) {
         if(typeof enabled!=='boolean')throw new Error('The custom UI update option must be a checkbox value.');
@@ -69,8 +68,8 @@ class CustomUIUpdater {
         const temp=this.settingsFile+'.tmp-'+crypto.randomBytes(4).toString('hex');
         try {fs.writeFileSync(temp,JSON.stringify({...settings,autoUpdate:enabled},null,2)+'\n');fs.renameSync(temp,this.settingsFile);} finally {if(fs.existsSync(temp))fs.unlinkSync(temp);}
         this.state.enabled=enabled;
-        if(!enabled) {if(this.timer)clearInterval(this.timer);this.timer=null;if(this.abort)this.abort.abort();this.emit('Automatic custom UI updates are off.');}
-        else {this.emit('Automatic custom UI updates are on.');this.start();}
+        if(!enabled) {if(this.abort)this.abort.abort();this.emit('Automatic custom UI updates are off.');}
+        else this.emit('Custom UI updates will be checked next time Toolbox starts.');
         return {...this.state};
     }
     check() {
@@ -118,7 +117,7 @@ class CustomUIUpdater {
             }
         }
     }
-    dispose() {this.disposed=true;if(this.timer)clearInterval(this.timer);this.timer=null;if(this.abort)this.abort.abort();}
+    dispose() {this.disposed=true;if(this.abort)this.abort.abort();}
 }
 function attach(window,ipcMain,options={}) {
     if(window.__toolboxCustomUIUpdater)return window.__toolboxCustomUIUpdater;
