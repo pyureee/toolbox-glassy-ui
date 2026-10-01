@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "version": "1.1.0",
+  "commit": "5d4d022dbcf62b13f4f9b91a08db4f9b75f57962",
+  "files": [
+    {
+      "path": "src/gui/css/comfort.css",
+      "sha256": "25b3802dbc2d0021a82576b702b639d0ed1f1b43e9b029b76ec0f113fea2ef52",
+      "size": 21822
+    },
+    {
+      "path": "src/gui/css/glass.css",
+      "sha256": "2b151f8d5610ac18a2a0eb4ca5fdeeb124d893e55c153f49a98c4f0d4108f49d",
+      "size": 15318
+    },
+    {
+      "path": "src/gui/css/splash.css",
+      "sha256": "9ceb9418a0be1525897c93d51a2ad4e4ba81d697ac6bbd653f4fb291ffe8eb60",
+      "size": 1897
+    },
+    {
+      "path": "src/gui/fonts/monaspace-neon-variable.woff2",
+      "sha256": "6569968f448ae856ab5b57dff1f13b109b220ca8e3f664169e135fcb5c4f0721",
+      "size": 510832
+    },
+    {
+      "path": "src/gui/fonts/OFL-Monaspace.txt",
+      "sha256": "481f459f4a5f063c0926aeefd7deac7962b36dcc51d27599a569844eedef5546",
+      "size": 4479
+    },
+    {
+      "path": "src/gui/js/comfort-layout.js",
+      "sha256": "56a19dd2feec8933d3d45b2b2f17ce4b82fab25f263d3ac048d424208d868c42",
+      "size": 8280
+    },
+    {
+      "path": "src/gui/js/custom-ui-settings.js",
+      "sha256": "844c864dfbcfce9a54922f734be9e7b1e24a6316f2040e88ca6351b73353db6d",
+      "size": 2416
+    },
+    {
+      "path": "src/gui/js/glass-theme.js",
+      "sha256": "ecdf750a0df106b4396c0d1ec70e5ceff39e5e857a995b6f9ef6ae4d5f04c058",
+      "size": 779
+    },
+    {
+      "path": "src/installer.cjs",
+      "sha256": "5617f1e52286ae9d09884ec12fe3024e8bca963ce54bf215156e493346b8516d",
+      "size": 12004
+    },
+    {
+      "path": "src/patches.cjs",
+      "sha256": "d37d2cef9f2b11146a462efc133d686bc405adafa379bae3dd1c1868e192d064",
+      "size": 9366
+    },
+    {
+      "path": "src/runtime/custom-ui-updater.js",
+      "sha256": "77b307a115e8d28dbe534900a6d02c1c4c9dd8db5e42d496a84ce453e48ea31b",
+      "size": 9143
+    },
+    {
+      "path": "src/theme.json",
+      "sha256": "38fb72b268a73456f0f0725a40dbc4b4c390bbf8565229572ec57562e0c45626",
+      "size": 694
+    }
+  ]
+}
