@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "1.1.0",
-  "commit": "5d4d022dbcf62b13f4f9b91a08db4f9b75f57962",
+  "version": "1.1.1",
+  "commit": "34c778000f8d9affc9e20b951a9e745423e89880",
   "files": [
     {
       "path": "src/gui/css/comfort.css",
@@ -10,8 +10,8 @@
     },
     {
       "path": "src/gui/css/glass.css",
-      "sha256": "2b151f8d5610ac18a2a0eb4ca5fdeeb124d893e55c153f49a98c4f0d4108f49d",
-      "size": 15318
+      "sha256": "22219d625e8640adb2edf91aca0be5528b4603742650e4ea37921d724546ec75",
+      "size": 14718
     },
     {
       "path": "src/gui/css/splash.css",
@@ -35,8 +35,8 @@
     },
     {
       "path": "src/gui/js/custom-ui-settings.js",
-      "sha256": "844c864dfbcfce9a54922f734be9e7b1e24a6316f2040e88ca6351b73353db6d",
-      "size": 2416
+      "sha256": "6f6067ae4697abc73df7d5146ab7c11a096fc00a8dfa41a310db0cb260730574",
+      "size": 3212
     },
     {
       "path": "src/gui/js/glass-theme.js",
@@ -55,12 +55,12 @@
     },
     {
       "path": "src/runtime/custom-ui-updater.js",
-      "sha256": "77b307a115e8d28dbe534900a6d02c1c4c9dd8db5e42d496a84ce453e48ea31b",
-      "size": 9143
+      "sha256": "0dcadbbd774265d3c8920e8c1264ed5a4e19cbf9f212cf6830f8c29d69e887f4",
+      "size": 8899
     },
     {
       "path": "src/theme.json",
-      "sha256": "38fb72b268a73456f0f0725a40dbc4b4c390bbf8565229572ec57562e0c45626",
+      "sha256": "14f197cc88eccb6e47bb528f87b0140940e62d20dd9a97383b380782fdbde75c",
       "size": 694
     }
   ]
