@@ -1,0 +1,301 @@
+/* Local smoked-glass theme. Native Vue controls, IPC, and scrolling are retained. */
+body.toolbox-modern {
+    --tb-sidebar: 172px;
+    --tb-shell-gap: 26px;
+    --tb-header-height: 142px;
+    --glass-titlebar: 44px;
+    --glass-sidebar-padding-top: 16px;
+    --glass-nav-gap: 11px;
+    --glass-inset: 27px;
+    --tb-bg: #2c3037;
+    --tb-surface: rgba(26, 33, 43, .52);
+    --tb-surface-raised: #38404a;
+    --tb-surface-hover: #45515e;
+    --tb-border: rgba(238, 245, 255, .24);
+    --tb-border-soft: rgba(238, 245, 255, .14);
+    --tb-text: #f4f6f9;
+    --tb-text-muted: #c2c8d0;
+    --tb-accent: #80bdf0;
+    --tb-accent-soft: rgba(128, 189, 240, .15);
+    --tb-blue: #80bdf0;
+    --tb-green: #9dd9bb;
+    --tb-red: #ff9eaa;
+    --tb-warning: #efcb91;
+    --tb-radius-sm: 12px;
+    --tb-radius: 17px;
+    --tb-shadow: 0 18px 38px rgba(8, 14, 22, .24);
+    --glass-edge: rgba(255, 255, 255, .24);
+    --glass-top-edge: rgba(255, 255, 255, .36);
+    --glass-fill: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(185, 193, 206, .03)), rgba(38, 45, 52, .22);
+    --glass-well: linear-gradient(135deg, rgba(19, 28, 38, .24), rgba(11, 17, 26, .38));
+    --glass-base: rgba(44, 48, 55, .64);
+}
+
+body.toolbox-modern.tb-glass-light {
+    --tb-bg: #c5cbd2;
+    --tb-surface: rgba(240, 245, 251, .70);
+    --tb-surface-raised: #e5ebf2;
+    --tb-surface-hover: #d3dfe9;
+    --tb-border: rgba(63, 83, 105, .24);
+    --tb-border-soft: rgba(63, 83, 105, .16);
+    --tb-text: #233243;
+    --tb-text-muted: #4d6073;
+    --tb-accent: #337eae;
+    --tb-accent-soft: rgba(63, 143, 202, .13);
+    --tb-red: #ba3e54;
+    --tb-warning: #8b6023;
+    --glass-edge: rgba(255, 255, 255, .50);
+    --glass-top-edge: rgba(255, 255, 255, .80);
+    --glass-fill: linear-gradient(135deg, rgba(255, 255, 255, .36), rgba(238, 244, 251, .16)), rgba(221, 229, 240, .28);
+    --glass-well: linear-gradient(135deg, rgba(247, 250, 255, .30), rgba(220, 230, 240, .52));
+    --glass-base: rgba(197, 203, 210, .64);
+}
+
+/* Keep the desktop visible through the window; tint only the application layer. */
+html, body.toolbox-modern, #app, body.toolbox-modern .v-application--wrap {
+    background: transparent !important;
+}
+
+body.toolbox-modern, body.toolbox-modern .v-application {
+    font-family: "Segoe UI", "Satoshi", sans-serif !important;
+    letter-spacing: 0 !important;
+}
+
+body.toolbox-modern .v-application, body.toolbox-modern #app.v-application {
+    background: var(--glass-base) !important;
+    color: var(--tb-text) !important;
+    /* Override the earlier theme's local variables so the native light switch works. */
+    --tb-bg: inherit;
+    --tb-surface: inherit;
+    --tb-surface-raised: inherit;
+    --tb-surface-hover: inherit;
+    --tb-border: inherit;
+    --tb-border-soft: inherit;
+    --tb-text: inherit;
+    --tb-text-muted: inherit;
+    --tb-shadow: inherit;
+}
+
+body.toolbox-modern::after { border-color: rgba(255, 255, 255, .20); border-radius: 14px; }
+
+body.toolbox-modern .v-application .v-system-bar {
+    height: var(--glass-titlebar) !important;
+    padding: 0 17px !important;
+    background: rgba(21, 28, 37, .16) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, .09);
+    font-size: 11px;
+}
+body.toolbox-modern.tb-glass-light .v-application .v-system-bar { background: rgba(247, 250, 255, .22) !important; }
+body.toolbox-modern .v-system-bar > span:first-of-type { font-weight: 500; }
+body.toolbox-modern .v-system-bar .v-icon { color: var(--tb-text-muted) !important; }
+
+body.toolbox-modern .v-application--wrap > .container.pa-0 { top: var(--glass-titlebar); }
+
+body.toolbox-modern .v-tabs:before {
+    content: "";
+    position: absolute;
+    top: var(--tb-shell-gap);
+    right: var(--tb-shell-gap);
+    bottom: var(--tb-shell-gap);
+    left: calc(var(--tb-sidebar) + var(--tb-shell-gap) * 2);
+    border: 1px solid var(--glass-edge);
+    border-top-color: var(--glass-top-edge);
+    border-radius: 22px;
+    background: var(--glass-fill);
+    /* Chromium 96 re-composites the root tint through overlapping backdrop filters. */
+    backdrop-filter: none;
+    box-shadow: var(--tb-shadow), inset 0 1px 0 rgba(255, 255, 255, .06);
+    pointer-events: none;
+}
+
+body.toolbox-modern .v-tabs > .v-tabs-bar {
+    z-index: 3;
+    padding: var(--glass-sidebar-padding-top) 8px 12px !important;
+    background: var(--glass-fill) !important;
+    border-color: var(--glass-edge);
+    border-top-color: var(--glass-top-edge);
+    border-radius: 22px;
+    backdrop-filter: blur(24px) saturate(.7);
+    box-shadow: var(--tb-shadow), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+body.toolbox-modern .v-application .v-tabs.theme--light > .v-tabs-bar,
+body.toolbox-modern .v-application .v-tabs.theme--dark > .v-tabs-bar {
+    background: var(--glass-fill) !important;
+}
+
+body.toolbox-modern .v-tabs-bar__content { gap: var(--glass-nav-gap); }
+body.toolbox-modern .tb-brand {
+    /* Align the first navigation button with the workspace content panel. */
+    flex: 0 0 calc(var(--tb-header-height) - var(--tb-shell-gap) - var(--glass-sidebar-padding-top) - var(--glass-nav-gap) - 1px);
+    padding: 0 0 8px;
+}
+body.toolbox-modern .tb-brand img {
+    width: 80px;
+    height: 80px;
+    padding: 4px;
+    border-radius: 50%;
+    background: rgba(22, 32, 44, .37);
+    box-shadow: 0 2px 10px rgba(2, 7, 17, .14), inset 0 1px 0 rgba(255, 255, 255, .19);
+    filter: none;
+}
+body.toolbox-modern .tb-brand-copy { display: none; }
+
+body.toolbox-modern .v-tabs-bar .v-tab {
+    flex: 0 0 70px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    padding: 8px 2px !important;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: normal;
+    color: var(--tb-text-muted) !important;
+    border-radius: 14px;
+}
+body.toolbox-modern .v-tabs-bar .v-tab .v-icon {
+    margin: 0 !important;
+    font-size: 19px;
+    color: var(--tb-text-muted) !important;
+}
+body.toolbox-modern .v-tabs-bar .v-tab:hover { background: rgba(255, 255, 255, .04); border-color: transparent; }
+body.toolbox-modern .v-tabs-bar .v-tab.v-tab--active {
+    color: var(--tb-text) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .025));
+    border-color: var(--glass-edge);
+    border-top-color: var(--glass-top-edge);
+    box-shadow: 0 4px 12px rgba(10, 21, 35, .10);
+}
+body.toolbox-modern .v-tabs-bar .v-tab.v-tab--active .v-icon { color: var(--tb-accent) !important; }
+body.toolbox-modern .v-tabs-bar .v-tab.v-tab--active:after {
+    content: "";
+    position: absolute;
+    left: -9px;
+    top: 23px;
+    width: 3px;
+    height: 22px;
+    border-radius: 0 3px 3px 0;
+    background: var(--tb-accent);
+    pointer-events: none;
+}
+body.toolbox-modern .v-tabs-bar .tb-nav-tab-3 { margin-top: auto !important; }
+
+body.toolbox-modern .tb-workspace-heading {
+    top: calc(var(--glass-titlebar) + var(--tb-shell-gap) + var(--glass-inset) + 7px);
+    left: calc(var(--tb-sidebar) + var(--tb-shell-gap) * 2 + var(--glass-inset));
+    max-width: calc(100vw - var(--tb-sidebar) - var(--tb-shell-gap) * 3 - var(--glass-inset) * 2 - 190px);
+}
+body.toolbox-modern .tb-workspace-heading strong { font-size: 27px; font-weight: 500; line-height: 1.25; }
+body.toolbox-modern .tb-toolbox-action {
+    top: calc(var(--glass-titlebar) + var(--tb-shell-gap) + var(--glass-inset) + 3px);
+    right: calc(var(--tb-shell-gap) + var(--glass-inset));
+    width: 142px;
+    height: 50px !important;
+    padding: 0 12px !important;
+    border: 1px solid rgba(220, 239, 255, .40) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 5px 20px rgba(7, 16, 29, .14), inset 0 1px 0 rgba(255, 255, 255, .30) !important;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: none !important;
+}
+body.toolbox-modern .tb-toolbox-action.border-bott-green { color: #183349 !important; background: linear-gradient(150deg, #a3d0f3, #80bdf0) !important; }
+body.toolbox-modern .tb-toolbox-action.border-bott-red {
+    color: var(--tb-text) !important;
+    background: rgba(255, 255, 255, .09) !important;
+    border-color: var(--glass-edge) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07) !important;
+}
+body.toolbox-modern .tb-toolbox-action.border-bott-red .v-icon { color: var(--tb-red) !important; }
+body.toolbox-modern .tb-toolbox-action.border-bott-orange { color: var(--tb-warning) !important; background: rgba(255, 255, 255, .09) !important; }
+body.toolbox-modern .tb-toolbox-action:focus-visible { outline: 2px solid var(--tb-accent); outline-offset: 4px; }
+
+body.toolbox-modern .v-tabs > .v-tabs-items {
+    z-index: 2;
+    left: calc(var(--tb-sidebar) + var(--tb-shell-gap) * 2 + var(--glass-inset));
+    right: calc(var(--tb-shell-gap) + var(--glass-inset));
+    bottom: calc(var(--tb-shell-gap) + var(--glass-inset));
+    background: var(--glass-well) !important;
+    border-color: var(--tb-border-soft);
+    border-bottom-color: var(--glass-edge);
+    border-radius: 17px;
+    backdrop-filter: none;
+    box-shadow: inset 0 1px 3px rgba(9, 14, 24, .11);
+}
+body.toolbox-modern .v-window-item > .container { padding: 18px !important; }
+body.toolbox-modern .logs.scroller {
+    color: var(--tb-text);
+    font: 400 12.5px/1.65 "Monaspace Neon", Consolas, monospace !important;
+    font-variation-settings: "wght" 400, "wdth" 100 !important;
+    padding: 46px 8px 20px;
+    box-shadow: none;
+}
+body.toolbox-modern .log-log { color: var(--tb-text) !important; }
+body.toolbox-modern .log-warn { color: var(--tb-warning) !important; }
+body.toolbox-modern .log-error { color: var(--tb-red) !important; }
+body.toolbox-modern .logs .highlight { color: #173347; background: #a3d0f3; }
+
+body.toolbox-modern .tb-mod-search { color: var(--tb-text-muted); background: rgba(255, 255, 255, .07); border-color: var(--tb-border); border-radius: 12px; }
+body.toolbox-modern .tb-mod-search input { font-family: "Segoe UI", sans-serif; }
+body.toolbox-modern .tb-mod-search input::placeholder, body.toolbox-modern .tb-mod-search-count { color: var(--tb-text-muted); }
+body.toolbox-modern .tb-mod-search:focus-within { border-color: var(--tb-accent); box-shadow: 0 0 0 2px var(--tb-accent-soft); }
+
+body.toolbox-modern .v-expansion-panel, body.toolbox-modern .v-toolbar.v-sheet,
+body.toolbox-modern .v-window-item > .container > .v-btn--block { background: rgba(255, 255, 255, .065) !important; border-color: var(--tb-border-soft); box-shadow: none !important; }
+body.toolbox-modern .v-expansion-panel-header { font-size: 13px; font-weight: 500; }
+body.toolbox-modern .v-subheader { font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+body.toolbox-modern .v-expansion-panel-header:hover, body.toolbox-modern .v-list-item:hover { background: rgba(255, 255, 255, .065); }
+body.toolbox-modern .disabled-mod { border-left-color: var(--tb-red) !important; opacity: .8; }
+body.toolbox-modern .v-text-field > .v-input__control > .v-input__slot,
+body.toolbox-modern .v-select > .v-input__control > .v-input__slot { background: rgba(255, 255, 255, .07) !important; }
+body.toolbox-modern .v-label, body.toolbox-modern .v-input input,
+body.toolbox-modern .v-select__selection { color: var(--tb-text-muted) !important; }
+body.toolbox-modern .v-input--is-focused .v-icon,
+body.toolbox-modern .v-input--is-label-active .v-input--selection-controls__input .v-icon { color: var(--tb-accent) !important; }
+
+/* Popup menus and dialogs use solid glass-tinted surfaces for reliable readability. */
+body.toolbox-modern .v-menu__content, body.toolbox-modern .v-list,
+body.toolbox-modern .v-card { background: var(--tb-surface-raised) !important; color: var(--tb-text) !important; border-color: var(--tb-border); }
+body.toolbox-modern .v-dialog { border-color: var(--tb-border); border-radius: 18px !important; }
+body.toolbox-modern .v-list-item, body.toolbox-modern .v-list-item__subtitle { color: var(--tb-text-muted) !important; }
+body.toolbox-modern .v-window-item > .container > .v-btn--fab { background: var(--tb-surface-raised) !important; border-color: var(--tb-border); color: var(--tb-text-muted) !important; }
+body.toolbox-modern .v-window-item > .container > .v-btn--fab:hover { color: var(--tb-text) !important; }
+body.toolbox-modern .scroller::-webkit-scrollbar-thumb,
+body.toolbox-modern .scroller-cutted::-webkit-scrollbar-thumb,
+body.toolbox-modern .v-menu__content::-webkit-scrollbar-thumb { background: rgba(164, 184, 204, .48) !important; border: 2px solid transparent !important; background-clip: padding-box !important; }
+
+@media (max-width: 900px) {
+    body.toolbox-modern { --tb-sidebar: 160px; --tb-shell-gap: 19px; --glass-inset: 22px; --tb-header-height: 127px; }
+    body.toolbox-modern .tb-brand img { width: 72px; height: 72px; }
+    body.toolbox-modern .tb-workspace-heading strong { font-size: 25px; }
+    body.toolbox-modern .tb-toolbox-action { width: 128px; }
+    body.toolbox-modern .v-tabs-bar .v-tab { font-size: 10.5px; }
+}
+@media (max-height: 620px) {
+    body.toolbox-modern { --tb-shell-gap: 15px; --glass-inset: 20px; --tb-header-height: 113px; --glass-nav-gap: 5px; }
+    body.toolbox-modern .tb-brand { padding-bottom: 10px; }
+    body.toolbox-modern .tb-brand img { width: 64px; height: 64px; }
+    body.toolbox-modern .v-tabs-bar .v-tab { flex-basis: 58px; height: 58px; gap: 5px; }
+    body.toolbox-modern .tb-toolbox-action { height: 44px !important; }
+}
+@media (max-width: 600px) {
+    body.toolbox-modern { --tb-sidebar: 132px; --tb-shell-gap: 12px; --glass-inset: 14px; --tb-header-height: 115px; --glass-sidebar-padding-top: 12px; }
+    body.toolbox-modern .v-tabs > .v-tabs-bar { padding: 12px 5px !important; }
+    body.toolbox-modern .v-tabs-bar .v-tab { font-size: 0; flex-basis: 57px; height: 57px; }
+    body.toolbox-modern .v-tabs-bar .v-tab .v-icon { font-size: 21px; }
+    body.toolbox-modern .tb-brand img { width: 64px; height: 64px; }
+    body.toolbox-modern .tb-workspace-heading { max-width: calc(100vw - 220px); }
+    body.toolbox-modern .tb-workspace-heading strong { font-size: 20px; }
+    body.toolbox-modern .tb-toolbox-action { width: 106px; height: 44px !important; font-size: 12px; }
+    body.toolbox-modern .v-window-item > .container { padding: 12px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    body.toolbox-modern .v-tab, body.toolbox-modern .v-btn { transition: none !important; }
+}

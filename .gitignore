@@ -1,0 +1,7 @@
+node_modules/
+custom-ui-backups/
+backups/
+.test-output/
+*.log
+Thumbs.db
+Desktop.ini

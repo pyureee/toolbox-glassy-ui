@@ -1,0 +1,79 @@
+/* Startup splash material matches the main Toolbox smoked-glass theme. */
+:root {
+    color-scheme: dark;
+    --splash-base: rgba(44, 48, 55, .64);
+    --splash-edge: rgba(255, 255, 255, .24);
+    --splash-top-edge: rgba(255, 255, 255, .36);
+    --splash-text: #f4f6f9;
+    --splash-muted: #c2c8d0;
+    --splash-accent: #80bdf0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: transparent;
+    overflow: hidden;
+}
+
+body {
+    color: var(--splash-text);
+    font-family: "Segoe UI", "Satoshi", sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+
+.ui {
+    box-sizing: border-box;
+    position: absolute;
+    inset: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 30px 28px;
+    border: 1px solid var(--splash-edge);
+    border-top-color: var(--splash-top-edge);
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(185, 193, 206, .03)), var(--splash-base);
+    box-shadow: 0 14px 30px rgba(8, 14, 22, .20), inset 0 1px 0 rgba(255, 255, 255, .06);
+    -webkit-app-region: drag;
+}
+
+.ui > img {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: 144px;
+    height: 144px;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 50%;
+    background: rgba(22, 32, 44, .30);
+    box-shadow: 0 5px 20px rgba(7, 16, 29, .14), inset 0 1px 0 rgba(255, 255, 255, .10);
+    object-fit: contain;
+}
+
+.ui > div {
+    width: 100%;
+    max-width: 430px;
+    color: var(--splash-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+#caption {
+    color: var(--splash-text);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+#info {
+    min-height: 18px;
+    color: var(--splash-accent);
+}

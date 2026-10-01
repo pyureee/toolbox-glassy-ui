@@ -1,0 +1,18 @@
+{
+  "name": "Toolbox Custom UI",
+  "version": "1.0.0",
+  "preserve": [
+    "bin/update-self.js",
+    "bin/index-gui.js",
+    "bin/loader-gui.js",
+    "bin/gui/main.html",
+    "bin/gui/assets/tb-static.png",
+    "bin/gui/css/comfort.css",
+    "bin/gui/css/glass.css",
+    "bin/gui/css/splash.css",
+    "bin/gui/fonts/monaspace-neon-variable.woff2",
+    "bin/gui/js/comfort-layout.js",
+    "bin/gui/js/glass-theme.js",
+    "bin/gui/custom-ui-manifest.json"
+  ]
+}
