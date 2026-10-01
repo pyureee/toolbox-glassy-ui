@@ -4,6 +4,7 @@ body.toolbox-modern {
     --tb-shell-gap: 26px;
     --tb-header-height: 142px;
     --glass-titlebar: 44px;
+    --glass-window-radius: 14px;
     --glass-sidebar-padding-top: 16px;
     --glass-nav-gap: 11px;
     --glass-inset: 27px;
@@ -56,6 +57,11 @@ html, body.toolbox-modern, #app, body.toolbox-modern .v-application--wrap {
     background: transparent !important;
 }
 
+/* Clip every painted layer, including the fixed title bar and its backdrop filter. */
+body.toolbox-modern {
+    clip-path: inset(0 round var(--glass-window-radius));
+}
+
 body.toolbox-modern, body.toolbox-modern .v-application {
     font-family: "Segoe UI", "Satoshi", sans-serif !important;
     letter-spacing: 0 !important;
@@ -76,7 +82,7 @@ body.toolbox-modern .v-application, body.toolbox-modern #app.v-application {
     --tb-shadow: inherit;
 }
 
-body.toolbox-modern::after { border-color: rgba(255, 255, 255, .20); border-radius: 14px; }
+body.toolbox-modern::after { border-color: rgba(255, 255, 255, .20); border-radius: var(--glass-window-radius); }
 
 body.toolbox-modern .v-application .v-system-bar {
     height: var(--glass-titlebar) !important;

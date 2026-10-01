@@ -1,6 +1,6 @@
 {
   "name": "Toolbox Custom UI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "preserve": [
     "bin/update-self.js",
     "bin/index-gui.js",

@@ -6,6 +6,8 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 The theme includes a 172 px sidebar, an 80 px animated sidebar logo, and a Log button aligned with the main log panel. Native Start/Stop controls, logs, mods, settings, and update messages keep their existing handlers.
 
+Version 1.0.1 fixes the outer window corners: the translucent surface and title bar now follow the same 14 px curve as the border. To update an existing installation, close Toolbox and run the installer again; it backs up the changed files.
+
 ![Glass startup splash](docs/images/splash.png)
 
 ## Install into your Toolbox
