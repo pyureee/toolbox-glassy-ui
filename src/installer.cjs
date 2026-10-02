@@ -39,6 +39,11 @@ function planInstall(toolboxRoot, staticLogo, sourceRoot=__dirname) {
     changes.set('bin/index-gui.js',Buffer.from(patches.patchSplashWindow(read('bin/index-gui.js'))));
     changes.set('bin/update-self.js',Buffer.from(patches.patchUpdater(read('bin/update-self.js'))));
     changes.set('bin/gui/main.html',Buffer.from(patches.patchMainHtml(read('bin/gui/main.html'))));
+    const splash=read('bin/gui/splash.html');
+    if(!/src=["'][^"']*js\/glass-theme\.js["']/.test(splash)) {
+        if(!/<\/body>/i.test(splash))throw new Error('Unsupported splash HTML body.');
+        changes.set('bin/gui/splash.html',Buffer.from(splash.replace(/<\/body>/i,'<script src="js/glass-theme.js"></script>\n</body>')));
+    }
     for(const name of ['installer.cjs','patches.cjs','theme.json']) changes.set('bin/custom-ui-installer/'+name,fs.readFileSync(path.join(sourceRoot,name)));
     changes.set('bin/custom-ui-updater.js',fs.readFileSync(path.join(sourceRoot,'runtime','custom-ui-updater.js')));
     if(!fs.existsSync(safePath(root,'custom-ui-settings.json'))) changes.set('custom-ui-settings.json',Buffer.from('{"autoUpdate":false}\n'));

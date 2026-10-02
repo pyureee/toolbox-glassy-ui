@@ -4,14 +4,14 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 ![Toolbox glass interface](docs/images/main.png)
 
-Version 1.1.1 includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox in Toolbox Settings. The outer window, translucent surface, and title bar share rounded corners.
+Version 1.2.0 adds a glass-styled **Appearance** section in Settings, with a theme color picker, HEX/RGB fields, and a transparency slider. It includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox. The outer window, translucent surface, and title bar share rounded corners.
 
 ![Glass startup splash](docs/images/splash.png)
 
 ## Install into your Toolbox
 
 1. **Close TERA Toolbox completely**, including its tray instance.
-2. [Download ToolboxCustomUI-Setup.exe](https://github.com/pyureee/toolbox-custom-ui/raw/refs/heads/main/downloads/ToolboxCustomUI-Setup.exe).
+2. [Download ToolboxCustomUI-Setup.exe from the latest release](https://github.com/pyureee/toolbox-custom-ui/releases/latest/download/ToolboxCustomUI-Setup.exe).
 3. Run the EXE. Click **Browse** or paste the path to your Toolbox **main folder**. For example: `C:\Program Files (x86)\TeraToolbox Private`. Select the folder containing `bin`, `mods`, and `node_modules`.
 4. Choose **Install / update custom UI**, then click **Continue**. Windows asks for administrator access only if that folder needs it.
 5. Wait for the success message, then launch Toolbox normally.
@@ -62,7 +62,7 @@ The installer patches Toolbox's **self-updater** to read `bin/gui/custom-ui-mani
 Protected files include:
 
 - Theme CSS, layout/theme JavaScript, idle logo, and the log font.
-- `bin/gui/main.html` and the preservation manifest.
+- `bin/gui/main.html`, `bin/gui/splash.html`, and the preservation manifest.
 - `bin/loader-gui.js` and `bin/index-gui.js`, which contain the transparent main/splash window options.
 - `bin/update-self.js`, so the preservation hook itself survives self-updates.
 
@@ -80,12 +80,18 @@ The choice is saved in `custom-ui-settings.json` in your Toolbox main folder and
 
 You can also update manually by running a newer EXE.
 
+## Change the glass appearance
+
+Open **Settings → Appearance**. Click the color swatch to open the color picker, or enter a six-digit HEX color or RGB values from 0 to 255. Drag **Transparency** from 0% (solid) to 100% (transparent). The glass surfaces preview immediately; text and icons keep their opacity. Bright tints use dark text for readability.
+
+Your choices save automatically in `custom-ui-settings.json`, survive custom UI updates, and apply to the startup splash on the next launch. **Reset to default** restores the original gray tint and 36% transparency without changing the auto-update checkbox. The native dark/light switch remains available; a chosen custom tint stays selected across both modes until reset.
+
 ## Compatibility and appearance
 
 - Tested with **TERA Toolbox Private 2.0.0**, Electron **16.0.2**, Chromium **96**, and Node **16.9.1** on Windows.
 - The main window has a minimum size of **1300 × 710**. The startup splash is **550 × 400**.
 - Native window transparency lets the desktop show through the gray tint. It does not add Windows desktop blur.
-- The existing dark/light switch is retained. The startup splash uses the smoky dark base.
+- The existing dark/light switch is retained. The startup splash uses the smoky dark base unless you save a custom tint.
 - Window resizing and caption double-click maximize/restore are retained through a Windows-specific Electron hook.
 - The splash appears during Toolbox's normal self-update startup. Toolbox's option to skip self-update still skips that splash.
 - Forks with a different source layout may need a patcher update. Installation stops before modifying files when required patch anchors are missing.

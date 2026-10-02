@@ -305,3 +305,73 @@ body.toolbox-modern .v-menu__content::-webkit-scrollbar-thumb { background: rgba
 @media (prefers-reduced-motion: reduce) {
     body.toolbox-modern .v-tab, body.toolbox-modern .v-btn { transition: none !important; }
 }
+
+/* Appearance uses the same edges, spacing and blue focus accent as native settings. */
+body.toolbox-modern .tb-appearance {
+    max-width: 560px;
+    margin: 12px 8px 20px;
+    padding: 16px 18px;
+    border: 1px solid var(--glass-edge);
+    border-top-color: var(--glass-top-edge);
+    border-radius: var(--tb-radius);
+    background: var(--glass-fill);
+    color: var(--tb-text);
+    -webkit-app-region: no-drag;
+}
+body.toolbox-modern .tb-appearance-heading,
+body.toolbox-modern .tb-transparency-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+body.toolbox-modern .tb-appearance h3 { margin: 0; font-size: 16px; font-weight: 600; }
+body.toolbox-modern .tb-appearance-reset {
+    padding: 6px 10px;
+    border: 1px solid var(--tb-border-soft);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--tb-text-muted);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+body.toolbox-modern .tb-appearance-reset:hover { background: var(--tb-accent-soft); color: var(--tb-text); }
+body.toolbox-modern .tb-appearance-colors { display: grid; grid-template-columns: 1.2fr 1.5fr repeat(3, 1fr); gap: 12px; margin: 16px 0 18px; }
+body.toolbox-modern .tb-appearance-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; color: var(--tb-text-muted); font-size: 12px; }
+body.toolbox-modern .tb-appearance-field input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 36px;
+    min-width: 0;
+    padding: 6px 9px;
+    border: 1px solid var(--tb-border);
+    border-radius: 10px;
+    background: var(--glass-well);
+    color: var(--tb-text);
+    font: inherit;
+    font-size: 13px;
+    color-scheme: dark;
+}
+body.toolbox-modern.tb-glass-light .tb-appearance-field input { color-scheme: light; }
+body.toolbox-modern .tb-appearance-field input[type=color] { padding: 4px; cursor: pointer; }
+body.toolbox-modern .tb-color-swatch::-webkit-color-swatch-wrapper { padding: 0; }
+body.toolbox-modern .tb-color-swatch::-webkit-color-swatch { border: 0; border-radius: 6px; }
+body.toolbox-modern .tb-appearance input:focus-visible,
+body.toolbox-modern .tb-appearance button:focus-visible { outline: 2px solid var(--tb-accent); outline-offset: 3px; }
+body.toolbox-modern .tb-transparency-heading { font-size: 14px; }
+body.toolbox-modern .tb-transparency-heading output { color: var(--tb-accent); font-variant-numeric: tabular-nums; }
+body.toolbox-modern .tb-transparency {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 6px;
+    margin: 18px 0 12px;
+    border-radius: 6px;
+    background: linear-gradient(to right, var(--tb-accent) var(--tb-range-fill), var(--tb-border) var(--tb-range-fill));
+    cursor: pointer;
+}
+body.toolbox-modern .tb-transparency::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border: 2px solid var(--tb-text); border-radius: 50%; background: var(--tb-accent); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+body.toolbox-modern .tb-transparency-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--tb-text-muted); }
+body.toolbox-modern .tb-appearance-error { margin-top: 10px; color: var(--tb-red); font-size: 12px; }

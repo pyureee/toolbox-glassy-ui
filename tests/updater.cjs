@@ -21,6 +21,18 @@ async function check(name,body){reset();await body();passed++;console.log('PASS 
         updater.setEnabled(true);const result=await updater.check();assert(result.updated);assert.strictEqual(installed,1);assert(calls.slice(1).every(url=>url.includes('/'+'a'.repeat(40)+'/')));assert.strictEqual(JSON.parse(fs.readFileSync(path.join(root,'custom-ui-settings.json'))).sentinel,'keep');assert.strictEqual(updater.state.version,'1.1.1');assert(updater.state.message.includes('Reopen Toolbox'));updater.dispose();
     });
     await check('new updater instance retains the checkbox preference',async()=>{reset(true);const updater=new CustomUIUpdater(root);assert.strictEqual(updater.state.enabled,true);updater.dispose();});
+    await check('appearance saves separately, persists across launches, and preserves auto-update',async()=>{
+        reset(true);const updater=new CustomUIUpdater(root);assert.deepStrictEqual(updater.state.appearance,{themeColor:null,transparency:36});
+        updater.setAppearance({themeColor:'#b2d5e5',transparency:70});
+        const saved=JSON.parse(fs.readFileSync(path.join(root,'custom-ui-settings.json')));assert.strictEqual(saved.autoUpdate,true);assert.strictEqual(saved.sentinel,'keep');assert.deepStrictEqual(saved.appearance,{themeColor:'#B2D5E5',transparency:70});
+        updater.setEnabled(false);assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(root,'custom-ui-settings.json'))).appearance,saved.appearance);
+        const reopened=new CustomUIUpdater(root);assert.deepStrictEqual(reopened.state.appearance,saved.appearance);reopened.setAppearance({themeColor:null,transparency:36});assert.strictEqual(reopened.state.enabled,false);updater.dispose();reopened.dispose();
+    });
+    await check('invalid appearance cannot overwrite saved settings',async()=>{
+        const updater=new CustomUIUpdater(root),original=fs.readFileSync(path.join(root,'custom-ui-settings.json'));
+        for(const value of [null,{themeColor:'red',transparency:36},{themeColor:'#fff',transparency:36},{themeColor:null,transparency:-1},{themeColor:null,transparency:101},{themeColor:null,transparency:1.5}])assert.throws(()=>updater.setAppearance(value),/Invalid/);
+        assert(fs.readFileSync(path.join(root,'custom-ui-settings.json')).equals(original));updater.dispose();
+    });
     await check('enabling waits for the next launch and startup checks only once without timers',async()=>{
         let calls=0;
         const fetch=async()=>{calls++;return Buffer.from(JSON.stringify({...manifest,version:'1.0.0'}));};
@@ -49,9 +61,11 @@ async function check(name,body){reset();await body();passed++;console.log('PASS 
         window.isDestroyed=()=>false;window.webContents={isDestroyed:()=>false,send:(...message)=>sent.push(message)};
         const updater=attach(window,ipc,{root,fetch:async()=>Buffer.from(JSON.stringify({...manifest,version:'1.0.0'}))});
         ipc.emit('custom-ui:set-auto-update',{sender:{send:()=>{}}},true);assert.strictEqual(updater.state.enabled,false);
+        ipc.emit('custom-ui:set-appearance',{sender:{}},{themeColor:'#B2D5E5',transparency:60});assert.strictEqual(updater.state.appearance.themeColor,null);
+        ipc.emit('custom-ui:set-appearance',{sender:window.webContents},{themeColor:'#B2D5E5',transparency:60});assert.strictEqual(updater.state.appearance.themeColor,'#B2D5E5');
         ipc.emit('custom-ui:set-auto-update',{sender:window.webContents},true);await updater.check();assert.strictEqual(updater.state.enabled,true);
         assert.strictEqual(attach(window,ipc,{root}),updater);assert.strictEqual(ipc.listenerCount('custom-ui:get-state'),1);
-        window.emit('closed');assert.strictEqual(ipc.listenerCount('custom-ui:get-state'),0);assert.strictEqual(ipc.listenerCount('custom-ui:set-auto-update'),0);assert(updater.disposed);assert(sent.length);
+        window.emit('closed');assert.strictEqual(ipc.listenerCount('custom-ui:get-state'),0);assert.strictEqual(ipc.listenerCount('custom-ui:set-auto-update'),0);assert.strictEqual(ipc.listenerCount('custom-ui:set-appearance'),0);assert(updater.disposed);assert(sent.length);
     });
     console.log(passed+' custom UI updater checks passed.');
 })().catch(error=>{console.error(error.stack);process.exitCode=1;}).finally(()=>{

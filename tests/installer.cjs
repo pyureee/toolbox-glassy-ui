@@ -77,7 +77,8 @@ module.exports = Updater;`;
 try {
     write('bin/loader-gui.js',main);write('bin/index-gui.js',splash);write('bin/update-self.js',updater);
     write('bin/gui/main.html','<!doctype html><html><head><script>window.renderer = "native";</script></head><body data-original="yes"><div id="app"></div><script src="./js/app.js"></script></body></html>');
-    for(const relative of ['bin/gui/splash.html','bin/gui/js/app.js','bin/gui/js/splash.js','bin/gui/css/app.css'])write(relative,'native file retained');
+    write('bin/gui/splash.html','<html><head><link rel="stylesheet" href="css/splash.css"></head><body><div class="ui"><div id="caption">Initializing...</div></div><script src="js/splash.js"></script></body></html>');
+    for(const relative of ['bin/gui/js/app.js','bin/gui/js/splash.js','bin/gui/css/app.css'])write(relative,'native file retained');
     write('bin/gui/assets/tb.gif',Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7','base64'));
     write('config.json','{"gui":{"theme":"dark"},"nativeSetting":true}');
     write('mods/example/index.js','module.exports = "native mod";');
@@ -106,6 +107,7 @@ try {
         assert.deepStrictEqual(operations,['bin/core-update.js','mods/example/index.js']);
     });
     check('reinstall is idempotent and does not duplicate hooks or create backups',()=>{const again=planInstall(root,logo);assert.strictEqual(again.records.length,0);assert.strictEqual(applyInstall(again).backupId,null);});
+    check('splash keeps its native handler and shares the saved appearance',()=>{const html=fs.readFileSync(path.join(root,'bin/gui/splash.html'),'utf8');assert(html.includes('js/splash.js'));assert.strictEqual((html.match(/js\/glass-theme.js/g)||[]).length,1);const manifest=JSON.parse(fs.readFileSync(path.join(root,'bin/gui/custom-ui-manifest.json')));assert(manifest.preserve.includes('bin/gui/splash.html'));});
     check('custom UI update preference is separate and survives reinstalls',()=>{write('custom-ui-settings.json','{"autoUpdate":true}');assert(!planInstall(root,logo).records.some(record=>record.path==='custom-ui-settings.json'));});
     check('restore refuses post-install edits before changing other files',()=>{
         const target=path.join(root,'bin/gui/css/glass.css'),installed=fs.readFileSync(target);fs.appendFileSync(target,'\n/* user edit */');const before=snapshot();assert.throws(()=>restore(root,result.backupId),/edited after installation/);assert.deepStrictEqual(snapshot(),before);fs.writeFileSync(target,installed);
