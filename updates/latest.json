@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "1.1.1",
-  "commit": "34c778000f8d9affc9e20b951a9e745423e89880",
+  "version": "1.2.0",
+  "commit": "b9c95a9c70f2d8dce614262778768cb0cb7a2b84",
   "files": [
     {
       "path": "src/gui/css/comfort.css",
@@ -10,8 +10,8 @@
     },
     {
       "path": "src/gui/css/glass.css",
-      "sha256": "22219d625e8640adb2edf91aca0be5528b4603742650e4ea37921d724546ec75",
-      "size": 14718
+      "sha256": "8e0c01ca748ebb700ddda51eeed71d49b99c3a8412c36877430bf93f8ff047f1",
+      "size": 17960
     },
     {
       "path": "src/gui/css/splash.css",
@@ -35,18 +35,18 @@
     },
     {
       "path": "src/gui/js/custom-ui-settings.js",
-      "sha256": "6f6067ae4697abc73df7d5146ab7c11a096fc00a8dfa41a310db0cb260730574",
-      "size": 3212
+      "sha256": "12ab98f41cd8420a79ce85de6833a4e13478c5a377f8498dbf8b2f942b16b46e",
+      "size": 7210
     },
     {
       "path": "src/gui/js/glass-theme.js",
-      "sha256": "ecdf750a0df106b4396c0d1ec70e5ceff39e5e857a995b6f9ef6ae4d5f04c058",
-      "size": 779
+      "sha256": "434fd07cb338b735ec37a822b2b0df06d5c006bf7b9fe6c44d25f0e843ddabb9",
+      "size": 4088
     },
     {
       "path": "src/installer.cjs",
-      "sha256": "5617f1e52286ae9d09884ec12fe3024e8bca963ce54bf215156e493346b8516d",
-      "size": 12004
+      "sha256": "5a13e7a3b542b5dac1186bd0859397e079de70994fee4b8cbb5266481b578490",
+      "size": 12345
     },
     {
       "path": "src/patches.cjs",
@@ -55,13 +55,13 @@
     },
     {
       "path": "src/runtime/custom-ui-updater.js",
-      "sha256": "0dcadbbd774265d3c8920e8c1264ed5a4e19cbf9f212cf6830f8c29d69e887f4",
-      "size": 8899
+      "sha256": "ac1feb405c39cd545451bb15ab4a0df41cb71945e8b4c7d7a08d306482db6d5e",
+      "size": 10300
     },
     {
       "path": "src/theme.json",
-      "sha256": "14f197cc88eccb6e47bb528f87b0140940e62d20dd9a97383b380782fdbde75c",
-      "size": 694
+      "sha256": "490b12be43b5d8d89d9dff40c463b8840d485594f7dcff4650fb4de0b011f072",
+      "size": 721
     }
   ]
 }
