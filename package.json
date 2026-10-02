@@ -1,9 +1,9 @@
 {
-  "name": "toolbox-custom-ui",
-  "version": "1.2.0",
+  "name": "toolbox-glassy-ui",
+  "version": "1.2.1",
   "description": "Smoked-glass desktop UI and startup splash for Windows TERA Toolbox",
   "license": "MIT",
-  "repository": "https://github.com/pyureee/toolbox-custom-ui",
+  "repository": "https://github.com/pyureee/toolbox-glassy-ui",
   "engines": { "node": ">=16.9.1" },
   "scripts": { "test": "node tests/installer.cjs && node tests/updater.cjs" }
 }

@@ -1,6 +1,7 @@
 'use strict';
 const assert=require('assert'),fs=require('fs'),path=require('path'),os=require('os'),crypto=require('crypto'),{EventEmitter}=require('events');
 const {CustomUIUpdater,attach,validateManifest,newer,MANIFEST_URL}=require('../src/runtime/custom-ui-updater.js');
+assert.strictEqual(MANIFEST_URL,'https://raw.githubusercontent.com/pyureee/toolbox-glassy-ui/main/updates/latest.json');
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'toolbox-custom-ui-updater-test-'));
 let passed=0;
 const hash=data=>crypto.createHash('sha256').update(data).digest('hex');

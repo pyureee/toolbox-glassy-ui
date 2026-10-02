@@ -9,7 +9,7 @@
         const saved = JSON.parse(fs.readFileSync(path.join(root,'custom-ui-settings.json'),'utf8')).appearance;
         if(saved && (saved.themeColor===null || /^#[a-f0-9]{6}$/i.test(saved.themeColor)) && Number.isInteger(saved.transparency) && saved.transparency>=0 && saved.transparency<=100) appearance=saved;
     } catch (_) {}
-    const variables = ['--glass-base','--glass-fill','--glass-well','--tb-text','--tb-text-muted','--tb-accent','--tb-accent-soft','--tb-bg','--tb-border','--tb-border-soft','--glass-edge','--glass-top-edge'];
+    const variables = ['--glass-base','--glass-fill','--glass-well','--tb-text','--tb-text-muted','--tb-accent','--tb-accent-soft','--tb-bg','--tb-surface-raised','--tb-surface-hover','--tb-border','--tb-border-soft','--glass-edge','--glass-top-edge'];
     function apply(value) {
         appearance={...value};
         const light=document.body.classList.contains('tb-glass-light');
@@ -24,6 +24,8 @@
             const scale=alpha/.64;
             const values={
                 '--glass-base':rgba(rgb,alpha),'--tb-bg':hex,
+                '--tb-surface-raised':bright?'#E5EBF2':'#38404A',
+                '--tb-surface-hover':bright?'#D3DFE9':'#45515E',
                 '--glass-fill':'linear-gradient(135deg,'+rgba([255,255,255],Math.min(.36,(bright?.36:.14)*scale))+','+rgba(rgb,.03*scale)+'),'+rgba(rgb,.22*scale),
                 '--glass-well':'linear-gradient(135deg,'+rgba(rgb,.24*scale)+','+rgba(rgb.map(c=>Math.max(0,c-14)),.38*scale)+')',
                 '--tb-text':ink,'--tb-text-muted':muted,'--tb-accent':accent,

@@ -4,14 +4,14 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 ![Toolbox glass interface](docs/images/main.png)
 
-Version 1.2.0 adds a glass-styled **Appearance** section in Settings, with a theme color picker, HEX/RGB fields, and a transparency slider. It includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox. The outer window, translucent surface, and title bar share rounded corners.
+Version 1.2.1 includes a glass-styled **Appearance** section in Settings, with a theme color picker, HEX/RGB fields, and a transparency slider. It includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox. The outer window, translucent surface, and title bar share rounded corners.
 
 ![Glass startup splash](docs/images/splash.png)
 
 ## Install into your Toolbox
 
 1. **Close TERA Toolbox completely**, including its tray instance.
-2. [Download ToolboxCustomUI-Setup.exe from the latest release](https://github.com/pyureee/toolbox-custom-ui/releases/latest/download/ToolboxCustomUI-Setup.exe).
+2. [Download ToolboxCustomUI-Setup.exe from the latest release](https://github.com/pyureee/toolbox-glassy-ui/releases/latest/download/ToolboxCustomUI-Setup.exe).
 3. Run the EXE. Click **Browse** or paste the path to your Toolbox **main folder**. For example: `C:\Program Files (x86)\TeraToolbox Private`. Select the folder containing `bin`, `mods`, and `node_modules`.
 4. Choose **Install / update custom UI**, then click **Continue**. Windows asks for administrator access only if that folder needs it.
 5. Wait for the success message, then launch Toolbox normally.
@@ -20,10 +20,10 @@ Version 1.2.0 adds a glass-styled **Appearance** section in Settings, with a the
 
 The EXE contains the installation package. It does not need an internet connection to install, a separate Node.js installation, or a Python/npm download. It uses Windows .NET Framework and Toolbox's bundled Electron/Node runtime.
 
-You can also install from the [source ZIP](https://github.com/pyureee/toolbox-custom-ui/archive/refs/heads/main.zip). Extract it outside Toolbox, open PowerShell in that folder (as administrator if required), and run:
+You can also install from the [source ZIP](https://github.com/pyureee/toolbox-glassy-ui/archive/refs/heads/main.zip). Extract it outside Toolbox, open PowerShell in that folder (as administrator if required), and run:
 
    ```powershell
-   Set-Location "C:\Downloads\toolbox-custom-ui-main"
+   Set-Location "C:\Downloads\toolbox-glassy-ui-main"
    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install.ps1 -ToolboxPath "C:\Program Files (x86)\TeraToolbox Private"
    ```
 

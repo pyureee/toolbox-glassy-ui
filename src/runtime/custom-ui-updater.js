@@ -4,7 +4,7 @@ const path = require('path');
 const os = require('os');
 const https = require('https');
 const crypto = require('crypto');
-const REPOSITORY = 'pyureee/toolbox-custom-ui';
+const REPOSITORY = 'pyureee/toolbox-glassy-ui';
 const MANIFEST_URL = 'https://raw.githubusercontent.com/'+REPOSITORY+'/main/updates/latest.json';
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 
@@ -47,7 +47,7 @@ class CustomUIUpdater {
     constructor(root,{fetch=fetchBytes,notify=()=>{},install}={}) {
         this.root=fs.realpathSync(root);this.fetch=fetch;this.notify=notify;this.install=install;
         this.settingsFile=path.join(this.root,'custom-ui-settings.json');this.started=false;this.running=null;this.abort=null;this.disposed=false;
-        this.state={enabled:false,version:'1.2.0',message:'Automatic custom UI updates are off.'};
+        this.state={enabled:false,version:'1.2.1',message:'Automatic custom UI updates are off.'};
         this.refresh();
     }
     readSettings() {return fs.existsSync(this.settingsFile)?JSON.parse(fs.readFileSync(this.settingsFile,'utf8')):{autoUpdate:false};}
