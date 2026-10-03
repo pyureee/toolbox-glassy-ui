@@ -20,6 +20,8 @@ Validated on Windows with the Toolbox-bundled Electron 16.0.2 / Node 16.9.1 runt
 | Version 1.2.0 appearance controls and main renderer | 128 checks and 20 mouse hit tests passed |
 | Saved color and transparency on the first Settings frame | 7 checks passed with a deliberately delayed IPC reply |
 | Version 1.2.1 dropdown contrast | 24 checks passed, including both menus in dark/light mode with default, dark, bright, and fully transparent custom tints |
+| Version 1.2.2 glass dropdowns | 73 checks passed for independent opacity, text contrast, highlights, menu interaction, and native language selection |
+| Appearance replacing the native Theme selector | 12 checks passed, including first-render removal, rerender stability, saved color edits, and Language menu interaction |
 | First-frame checkbox with an enabled saved preference | 6 checks passed, including a deliberately delayed settings reply |
 | Version 1.0.1 rounded window corners | 48 pixel checks passed across dark/light UI states and 1300x710, 1366x768, and 1600x900 windows |
 | Actual self-updater operation planning | Protected UI paths skipped; ordinary core update retained |

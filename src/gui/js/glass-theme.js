@@ -10,6 +10,26 @@
         if(saved && (saved.themeColor===null || /^#[a-f0-9]{6}$/i.test(saved.themeColor)) && Number.isInteger(saved.transparency) && saved.transparency>=0 && saved.transparency<=100) appearance=saved;
     } catch (_) {}
     const variables = ['--glass-base','--glass-fill','--glass-well','--tb-text','--tb-text-muted','--tb-accent','--tb-accent-soft','--tb-bg','--tb-surface-raised','--tb-surface-hover','--tb-border','--tb-border-soft','--glass-edge','--glass-top-edge'];
+    const luminance = color => color.map(channel => {
+        const value=channel/255;
+        return value<=.04045?value/12.92:Math.pow((value+.055)/1.055,2.4);
+    }).reduce((sum,channel,index)=>sum+channel*[.2126,.7152,.0722][index],0);
+    const contrast = (a,b) => (Math.max(luminance(a),luminance(b))+.05)/(Math.min(luminance(a),luminance(b))+.05);
+    function menuPalette(rgb) {
+        // Popup opacity is independent of the window slider. Check the tint against
+        // both an extreme backdrop and the row highlight before choosing its ink.
+        const candidate=bright=>{
+            const ink=bright?[35,50,67]:[244,246,249];
+            let color=rgb.slice();
+            const score=()=>contrast(ink,color.map(channel=>bright?channel*.88*.92:(channel*.88+255*.12)*.90+255*.10));
+            for(let step=0;step<20&&score()<4.8;step++)color=color.map(channel=>Math.round(bright?channel*.92+255*.08:channel*.92));
+            return {color,ink,score:score(),bright};
+        };
+        const dark=candidate(false),light=candidate(true);
+        // Prefer the surface nearest the chosen tint once both have readable ink.
+        const distance=palette=>palette.color.reduce((sum,channel,index)=>sum+Math.abs(channel-rgb[index]),0);
+        return distance(light)<distance(dark)?light:dark;
+    }
     function apply(value) {
         appearance={...value};
         const light=document.body.classList.contains('tb-glass-light');
@@ -17,6 +37,10 @@
         const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16));
         const alpha=1-appearance.transparency/100;
         const rgba=(color,a)=>'rgba('+color.join(',')+','+a.toFixed(3)+')';
+        const menu=menuPalette(rgb);
+        document.body.style.setProperty('--glass-menu-fill',rgba(menu.color,.88));
+        document.body.style.setProperty('--glass-menu-text','rgb('+menu.ink.join(',')+')');
+        document.body.style.setProperty('--glass-menu-highlight',menu.bright?'rgba(0,0,0,.06)':'rgba(255,255,255,.08)');
         variables.forEach(name=>document.body.style.removeProperty(name));
         if(appearance.themeColor!==null || appearance.transparency!==36) {
             const bright=rgb.reduce((sum,c,i)=>sum+c*[.2126,.7152,.0722][i],0)>155;

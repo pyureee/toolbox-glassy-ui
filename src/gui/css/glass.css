@@ -266,11 +266,33 @@ body.toolbox-modern .v-select__selection { color: var(--tb-text-muted) !importan
 body.toolbox-modern .v-input--is-focused .v-icon,
 body.toolbox-modern .v-input--is-label-active .v-input--selection-controls__input .v-icon { color: var(--tb-accent) !important; }
 
-/* Popup menus and dialogs use solid glass-tinted surfaces for reliable readability. */
+/* Dialogs keep their solid surfaces; dropdowns have their own denser glass tint. */
 body.toolbox-modern .v-menu__content, body.toolbox-modern .v-list,
 body.toolbox-modern .v-card { background: var(--tb-surface-raised) !important; color: var(--tb-text) !important; border-color: var(--tb-border); }
 body.toolbox-modern .v-dialog { border-color: var(--tb-border); border-radius: 18px !important; }
 body.toolbox-modern .v-list-item, body.toolbox-modern .v-list-item__subtitle { color: var(--tb-text-muted) !important; }
+body.toolbox-modern .v-menu__content {
+    background: var(--glass-menu-fill, rgba(44,48,55,.88)) !important;
+    backdrop-filter: blur(18px) saturate(110%);
+    /* Tint and ink change together; keep only native open/close transitions. */
+    transition-property: opacity, transform !important;
+    border: 1px solid var(--glass-edge);
+    border-top-color: var(--glass-top-edge);
+    border-radius: 17px !important;
+    box-shadow: var(--tb-shadow), inset 0 1px 0 rgba(255,255,255,.06);
+}
+body.toolbox-modern .v-menu__content .v-list { background: transparent !important; }
+body.toolbox-modern .v-menu__content .v-list,
+body.toolbox-modern .v-menu__content .v-list-item,
+body.toolbox-modern .v-menu__content .v-list-item__title,
+body.toolbox-modern .v-menu__content .v-list-item__subtitle {
+    color: var(--glass-menu-text, #f4f6f9) !important;
+}
+body.toolbox-modern .v-menu__content .v-list-item::before { background: transparent !important; }
+body.toolbox-modern .v-menu__content .v-list-item:hover,
+body.toolbox-modern .v-menu__content .v-list-item--active {
+    background: var(--glass-menu-highlight, rgba(255,255,255,.08)) !important;
+}
 body.toolbox-modern .v-window-item > .container > .v-btn--fab { background: var(--tb-surface-raised) !important; border-color: var(--tb-border); color: var(--tb-text-muted) !important; }
 body.toolbox-modern .v-window-item > .container > .v-btn--fab:hover { color: var(--tb-text) !important; }
 body.toolbox-modern .scroller::-webkit-scrollbar-thumb,

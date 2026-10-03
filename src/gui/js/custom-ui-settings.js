@@ -49,8 +49,10 @@
         if(!node || typeof node!=='object')return;
         const children=node.componentOptions?node.componentOptions.children:node.children;
         if(!children)return;
-        const index=children.findIndex(child=>child && child.componentOptions && child.componentOptions.propsData && child.componentOptions.propsData.field==='autostart');
+        let index=children.findIndex(child=>child && child.componentOptions && child.componentOptions.propsData && child.componentOptions.propsData.field==='autostart');
         if(index!==-1){
+            const themeIndex=children.findIndex(child=>child && child.componentOptions && child.componentOptions.propsData && child.componentOptions.propsData.field==='theme');
+            if(themeIndex!==-1){children.splice(themeIndex,1);if(themeIndex<index)index--;}
             if(!children.some(child=>child && child.key==='toolbox-custom-ui-autoupdate'))children.splice(index,0,
                 vm.$createElement(Appearance,{key:'toolbox-custom-appearance',ref:'toolboxCustomAppearance'}),
                 vm.$createElement('BoolOption',{key:'toolbox-custom-ui-autoupdate',ref:'toolboxCustomUIAutoUpdate',staticClass:'tb-custom-ui-checkbox',attrs:{id:'tb-custom-ui-autoupdate',text:'Auto-Update Custom UI',field:'custom-ui-auto-update',startValue:enabled},on:{update:change}}));

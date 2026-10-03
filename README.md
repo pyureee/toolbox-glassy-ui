@@ -4,7 +4,7 @@ A smoked-glass theme for **TERA Toolbox on Windows**, with a translucent gray ba
 
 ![Toolbox glass interface](docs/images/main.png)
 
-Version 1.2.1 includes a glass-styled **Appearance** section in Settings, with a theme color picker, HEX/RGB fields, and a transparency slider. It includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox. The outer window, translucent surface, and title bar share rounded corners.
+Version 1.2.2 includes a glass-styled **Appearance** section in Settings, with a theme color picker, HEX/RGB fields, and a transparency slider. Dropdown menus use their own readable glass tint, and Appearance replaces the native Theme selector. It includes an EXE installer with a folder picker and a native **Auto-Update Custom UI** checkbox. The outer window, translucent surface, and title bar share rounded corners.
 
 ![Glass startup splash](docs/images/splash.png)
 
@@ -84,14 +84,16 @@ You can also update manually by running a newer EXE.
 
 Open **Settings → Appearance**. Click the color swatch to open the color picker, or enter a six-digit HEX color or RGB values from 0 to 255. Drag **Transparency** from 0% (solid) to 100% (transparent). The glass surfaces preview immediately; text and icons keep their opacity. Bright tints use dark text for readability.
 
-Your choices save automatically in `custom-ui-settings.json`, survive custom UI updates, and apply to the startup splash on the next launch. **Reset to default** restores the original gray tint and 36% transparency without changing the auto-update checkbox. The native dark/light switch remains available; a chosen custom tint stays selected across both modes until reset.
+Dropdown menus use an independent 88% opacity with a subtle blur and selection highlight. Their tint follows your chosen color, with tone adjustments when needed to keep labels readable.
+
+Your choices save automatically in `custom-ui-settings.json`, survive custom UI updates, and apply to the startup splash on the next launch. **Reset to default** restores the original gray tint and 36% transparency without changing the auto-update checkbox. The custom UI hides the redundant native Theme dropdown; use the Appearance controls to choose the tint and transparency.
 
 ## Compatibility and appearance
 
 - Tested with **TERA Toolbox Private 2.0.0**, Electron **16.0.2**, Chromium **96**, and Node **16.9.1** on Windows.
 - The main window has a minimum size of **1300 × 710**. The startup splash is **550 × 400**.
 - Native window transparency lets the desktop show through the gray tint. It does not add Windows desktop blur.
-- The existing dark/light switch is retained. The startup splash uses the smoky dark base unless you save a custom tint.
+- The saved native dark/light mode is retained internally. The custom UI uses Appearance controls in place of the native Theme dropdown. The startup splash uses the smoky dark base unless you save a custom tint.
 - Window resizing and caption double-click maximize/restore are retained through a Windows-specific Electron hook.
 - The splash appears during Toolbox's normal self-update startup. Toolbox's option to skip self-update still skips that splash.
 - Forks with a different source layout may need a patcher update. Installation stops before modifying files when required patch anchors are missing.

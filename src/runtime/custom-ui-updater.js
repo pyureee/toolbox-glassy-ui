@@ -47,7 +47,7 @@ class CustomUIUpdater {
     constructor(root,{fetch=fetchBytes,notify=()=>{},install}={}) {
         this.root=fs.realpathSync(root);this.fetch=fetch;this.notify=notify;this.install=install;
         this.settingsFile=path.join(this.root,'custom-ui-settings.json');this.started=false;this.running=null;this.abort=null;this.disposed=false;
-        this.state={enabled:false,version:'1.2.1',message:'Automatic custom UI updates are off.'};
+        this.state={enabled:false,version:'1.2.2',message:'Automatic custom UI updates are off.'};
         this.refresh();
     }
     readSettings() {return fs.existsSync(this.settingsFile)?JSON.parse(fs.readFileSync(this.settingsFile,'utf8')):{autoUpdate:false};}
