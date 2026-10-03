@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "1.2.1",
-  "commit": "a44d7f0d25b959508b8b8af4a76d97d6dd3e8f67",
+  "version": "1.2.2",
+  "commit": "54deaa9ea0ed17d16c9fc19331d73b4234ef13b7",
   "files": [
     {
       "path": "src/gui/css/comfort.css",
@@ -10,8 +10,8 @@
     },
     {
       "path": "src/gui/css/glass.css",
-      "sha256": "8e0c01ca748ebb700ddda51eeed71d49b99c3a8412c36877430bf93f8ff047f1",
-      "size": 17960
+      "sha256": "a011f27f913eba9f3b028331efd9575139730b7ba5c8e58bf8b5b63d076172fc",
+      "size": 19102
     },
     {
       "path": "src/gui/css/splash.css",
@@ -35,13 +35,13 @@
     },
     {
       "path": "src/gui/js/custom-ui-settings.js",
-      "sha256": "12ab98f41cd8420a79ce85de6833a4e13478c5a377f8498dbf8b2f942b16b46e",
-      "size": 7210
+      "sha256": "a4225b64099fc203426e0f6d996f1171bb1ba5f981869a615a1343fb4466108f",
+      "size": 7477
     },
     {
       "path": "src/gui/js/glass-theme.js",
-      "sha256": "690faa1ac10a4eacd0bb576fd71dd13c4922d8887172d9537444a09191cd7d31",
-      "size": 4262
+      "sha256": "9ddfb508552afea2ab86ed5d0c6e58d878fbc49411f0d15bf138f175947a94e1",
+      "size": 5908
     },
     {
       "path": "src/installer.cjs",
@@ -55,12 +55,12 @@
     },
     {
       "path": "src/runtime/custom-ui-updater.js",
-      "sha256": "173e5dba180baf959930e7c4f60484d17f63e8d06f3350eb1eb1b272851ce4de",
+      "sha256": "f3eb85932186fce8ac5d0be787c21cc8d5d9c492cd287cd9e54d136358c74b18",
       "size": 10300
     },
     {
       "path": "src/theme.json",
-      "sha256": "5527c7c49fef84d52816eb3572a1f67854a19248ca043d7609a164f368894ea3",
+      "sha256": "68b3dee0df395e2028d27cfd8417e0fecd99042dacdb2be468750aa96b1a5df8",
       "size": 721
     }
   ]
